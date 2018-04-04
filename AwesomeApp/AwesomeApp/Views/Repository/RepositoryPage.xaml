@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:VM="clr-namespace:AwesomeApp.ViewModels.Repositories"
+             xmlns:statics="clr-namespace:AwesomeApp.Utils"
+             x:Class="AwesomeApp.Views.Repository.RepositoryPage"
+             Title="AwesomeApp">
+
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <SearchBar TextChanged="SearchBar_TextChanged" BackgroundColor="{x:Static statics:Palette.Header}" Placeholder="Search"/>
+            <ListView x:Name="lstRepository" HasUnevenRows="True" IsRefreshing="{Binding IsBusy, Mode=OneWay}" Margin="5,0" SeparatorColor="{x:Static statics:Palette.Header}"
+                      IsPullToRefreshEnabled="True" RefreshCommand="{Binding GetRepoCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout HorizontalOptions = "FillAndExpand" VerticalOptions = "FillAndExpand" Margin="5">
+                                    <Grid >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="2*" />
+                                            <RowDefinition Height="2*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <!--Header-->
+                                        <StackLayout  HorizontalOptions = "FillAndExpand" VerticalOptions = "FillAndExpand" Spacing="0" Grid.Column="0" Grid.Row="0">
+                                            <Label Text="{Binding name}" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" FontSize="Large" TextColor="{x:Static statics:Palette.HeaderTitle}" />
+                                        </StackLayout>
+
+                                        <!--Description-->
+                                        <StackLayout  HorizontalOptions = "Fill" VerticalOptions = "Fill" Spacing="0" Grid.Column="0" Grid.Row="1">
+                                            <Label Text="{Binding description}" VerticalTextAlignment="Center" HorizontalOptions="Fill" FontSize="Small" TextColor="{x:Static statics:Palette.DescTitle}" />
+                                        </StackLayout>
+
+                                        <!--Fork/Star-->
+                                        <StackLayout  HorizontalOptions = "FillAndExpand" VerticalOptions = "FillAndExpand" Spacing="0" Grid.Column="0" Grid.Row="2">
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="3*" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="3*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image 	HorizontalOptions="Center"	VerticalOptions ="Center" HeightRequest="20" WidthRequest="20" Source="fork.png" Grid.Column="0"/>
+                                                <Label Text="{Binding forks_count}" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" FontSize="Medium" TextColor="{x:Static statics:Palette.Header}" Grid.Column="1"/>
+                                                <Image 	HorizontalOptions="Center"	VerticalOptions ="Center" HeightRequest="20" WidthRequest="20" Source="star.png" Grid.Column="2"/>
+                                                <Label Text="{Binding stargazers_count}" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" FontSize="Medium" TextColor="{x:Static statics:Palette.Header}" Grid.Column="3"/>
+                                                
+                                            </Grid>
+                                        </StackLayout>
+
+                                        <!--Profile-->
+                                        <StackLayout  HorizontalOptions = "FillAndExpand" VerticalOptions = "FillAndExpand" Spacing="0" Grid.Column="1" Grid.RowSpan="3">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="3*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+
+                                                <!--ImgProfile-->
+                                                <StackLayout  HorizontalOptions = "Fill" VerticalOptions = "Fill" Spacing="0" Grid.Row="0">
+                                                    <Image 	HorizontalOptions="Center"	VerticalOptions ="Center" HeightRequest="50" WidthRequest="50">
+                                                        <Image.Source>
+                                                            <UriImageSource Uri="{Binding owner.avatar_url}" CacheValidity="1" CachingEnabled="true"/>
+                                                        </Image.Source>
+                                                    </Image>
+                                                </StackLayout>
+
+                                                <!--UserName-->
+                                                <StackLayout  HorizontalOptions = "FillAndExpand" VerticalOptions = "FillAndExpand" Spacing="0" Grid.Row="1">
+                                                    <Label Text="{Binding owner.login}" VerticalTextAlignment="Center" HorizontalOptions="Center" FontSize="Small" TextColor="{x:Static statics:Palette.HeaderTitle}" />
+                                                </StackLayout>
+
+                                                <!--NameLastName-->
+                                                <StackLayout  HorizontalOptions = "FillAndExpand" VerticalOptions = "FillAndExpand" Spacing="0" Grid.Row="2">
+                                                    <Label Text="{Binding full_name}" VerticalTextAlignment="Center" HorizontalOptions="Center" FontSize="Micro" TextColor="{x:Static statics:Palette.DescTitle}" />
+                                                </StackLayout>
+
+                                            </Grid>
+                                        </StackLayout>
+
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Label />
+                </ListView.Footer>
+            </ListView>
+            <!--<Button x:Name="load" Command="{Binding GetRepoCommand}" BackgroundColor="{x:Static statics:Palette.Header}"/>-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

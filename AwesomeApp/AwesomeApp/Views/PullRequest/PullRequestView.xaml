@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:statics="clr-namespace:AwesomeApp.Utils"
+             x:Class="AwesomeApp.Views.PullRequest.PullRequestView"
+             Title="Pull Requests">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <ListView x:Name="lstPullRqt" HasUnevenRows="True" ItemsSource="{Binding Items}" IsRefreshing="{Binding IsBusy, Mode=OneWay}" 
+                      Margin="5,0" SeparatorColor="{x:Static statics:Palette.Header}" ItemSelected="lstPullRqt_ItemSelected"
+                      IsPullToRefreshEnabled="True" RefreshCommand="{Binding GetPullRequest}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout HorizontalOptions = "Fill" VerticalOptions = "Fill" Spacing="0" Margin="5">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="45" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="45" />
+                                        </Grid.RowDefinitions>
+
+                                        <!--Header-->
+                                        <StackLayout  HorizontalOptions = "Fill" VerticalOptions = "Fill" Spacing="0" Grid.Row="0">
+                                            <Label Text="{Binding title}" VerticalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="Fill" FontSize="Large" TextColor="{x:Static statics:Palette.HeaderTitle}"/>
+                                        </StackLayout>
+
+                                        <!--Description-->
+                                        <StackLayout  HorizontalOptions = "Fill" VerticalOptions = "Fill" Spacing="0" Grid.Row="1">
+                                            <Label Text="{Binding body}" VerticalTextAlignment="Center" HorizontalOptions="Fill" FontSize="Small" TextColor="{x:Static statics:Palette.DescTitle}" />
+                                        </StackLayout>
+
+                                        <!--Profile-->
+                                        <StackLayout  HorizontalOptions = "Fill" VerticalOptions = "Fill" Spacing="0" Grid.Row="2">
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="35" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!--ImgProfile-->
+                                                <StackLayout  HorizontalOptions = "Fill" VerticalOptions = "Fill" Spacing="0" Grid.Column="0">
+                                                    <Image 	HorizontalOptions="Center" VerticalOptions ="Center" HeightRequest="35" WidthRequest="35">
+                                                        <Image.Source>
+                                                            <UriImageSource Uri="{Binding user.avatar_url}" CacheValidity="1" CachingEnabled="true"/>
+                                                        </Image.Source>
+                                                    </Image>
+                                                </StackLayout>
+
+                                                <!--UserRequest-->
+                                                <StackLayout  HorizontalOptions = "Fill" VerticalOptions = "Fill" Grid.Column="1">
+                                                    <Grid >
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="*" />
+                                                        </Grid.RowDefinitions>
+
+                                                        <!--username-->
+                                                        <StackLayout  HorizontalOptions = "Fill" VerticalOptions = "Fill" Spacing="0" Grid.Row="0">
+                                                            <Label Text="{Binding user.login}" HorizontalTextAlignment="Start" HorizontalOptions="Fill" FontSize="Small" TextColor="{x:Static statics:Palette.HeaderTitle}"/>
+                                                        </StackLayout>
+
+                                                        <!--data-->
+                                                        <StackLayout  HorizontalOptions = "Fill" VerticalOptions = "Fill" Grid.Row="1">
+                                                            <Label Text="{Binding created_at}" HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand" FontSize="Small" TextColor="{x:Static statics:Palette.DescTitle}"/>
+                                                        </StackLayout>
+
+                                                    </Grid>
+                                                </StackLayout>
+
+
+                                            </Grid>
+                                        </StackLayout>
+
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
